@@ -1,0 +1,84 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "local-rag"
+version = "1.0.0"
+description = "Local-first Retrieval-Augmented Generation knowledge infrastructure"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Local RAG Team", email = "team@local-rag.local"}]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.29.0",
+    "qdrant-client>=1.8.0",
+    "sqlalchemy>=2.0.0",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.3.0",
+    "fastembed>=0.3.0",
+    "pypdf>=3.17.0",
+    "pdfplumber>=0.11.0",
+    "beautifulsoup4>=4.12.0",
+    "python-docx>=1.1.0",
+    "python-magic>=0.4.27",
+    "python-multipart>=0.0.6",
+    "requests>=2.31.0",
+    "httpx>=0.27.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.4.0",
+    "mypy>=1.10.0",
+    "types-requests>=2.31.0",
+]
+typescript = [
+    # TypeScript SDK is separate
+]
+
+[project.scripts]
+local-rag = "src.cli.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "F", "I", "UP", "W", "B", "C4", "SIM", "T20", "PIE", "PT", "Q", "RET", "PL"]
+ignore = ["E501", "SIM103", "SIM117", "T201", "T203"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = true
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
